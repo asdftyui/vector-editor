@@ -14,12 +14,10 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Vector Editor App");
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("app.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 1080, 700);
         primaryStage.setScene(scene);
-
         primaryStage.show();
     }
 
