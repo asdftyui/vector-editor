@@ -1,7 +1,7 @@
 package com.example.vectoreditor;
 
 public interface Selectable {
-    void setSelected();
+    void setSelected(boolean selected);
     boolean isSelected();
     void printProperties();
 }
