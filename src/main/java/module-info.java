@@ -3,6 +3,6 @@ module com.example.vectoreditor {
     requires javafx.fxml;
 
 
-    opens com.example.vectoreditor to javafx.fxml;
+    opens com.example.vectoreditor.controller to javafx.fxml;
     exports com.example.vectoreditor;
 }

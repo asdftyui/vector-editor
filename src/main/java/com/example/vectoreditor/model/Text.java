@@ -1,47 +1,29 @@
 package com.example.vectoreditor.model;
 
-public class Text extends GraphicObject{
+import javafx.scene.paint.Color;
 
-    private String detail;
-    private double size;
-    private String font;
-    private String color;
+import java.util.Map;
 
+public class Text extends javafx.scene.text.Text {
 
-    public String getDetail() {
-        return detail;
+    private String title;
+
+    public String getTitle() {
+        return title;
     }
 
-    public double getSize() {
-        return size;
-    }
+    public Map<String, String> getAttribute() {
+        Color color = (Color) getFill();
 
-    public String getFont() {
-        return font;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public void setSize(double size) {
-        this.size = size;
-    }
-
-    public void setFont(String font) {
-        this.font = font;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    @Override
-    public String getProperty() {
-        return getTitle() + ' ' + getDetail() + ' ' + getX() + ' ' + getY() + ' ' + getSize() + ' ' + getFont() + ' ' + getColor();
+        Map<String, String> attribute = Map.of(
+                "title", getTitle(),
+                "detail", getText(),
+                "font", getFont().getFamily(),
+                "size", Double.toString(getFont().getSize()),
+                "color", "#" + Integer.toHexString((int) (color.getRed() * 255))
+                        + Integer.toHexString((int) (color.getGreen() * 255))
+                        + Integer.toHexString((int) (color.getBlue() * 255))
+        );
+        return attribute;
     }
 }

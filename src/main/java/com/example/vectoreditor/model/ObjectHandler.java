@@ -1,27 +1,47 @@
 package com.example.vectoreditor.model;
 
-import java.lang.reflect.Constructor;
+import javafx.scene.layout.BorderPane;
+
 import java.util.ArrayList;
 
 public class ObjectHandler {
-    private ArrayList<GraphicObject> elements = new ArrayList<>();
-    private int selectedIndex;
+    private ObjectFactory objectFactory = new ObjectFactory();
+    private ArrayList<BasicFunction> elements = new ArrayList<>();
+    private ArrayList<Integer> selectedIndex = new ArrayList<>();
 
-    public void createObject(String className) throws Exception {
-        Class<?> elementClass = Class.forName(className);
+    private BorderPane root;
 
-        // 클래스의 생성자 정보 얻기
-        Constructor<?> constructor = elementClass.getConstructor(String.class, double.class, double.class, Object[].class);
+    public ObjectHandler(BorderPane root) {
+        this.root = root;
+    }
 
-        // 객체 생성
-        elements.add((GraphicObject) constructor.newInstance());
+    public void createObject(String className) {
+        if (className.equals("Rectangle")){
+            Rectangle rectangle = objectFactory.createRectangle(elements.size()+1);
+            elements.add(rectangle);
+            root.getChildren().add(rectangle);
+            System.out.println("create rectangle");
+        } else if(className.equals("Ellipse")){
+            Ellipse ellipse = objectFactory.createEllipse(elements.size()+1);
+            elements.add(ellipse);
+            root.getChildren().add(ellipse);
+        }
     }
 
     public void changeZOrder(boolean front) {
         if (front) {
-            elements.add(0, elements.remove(selectedIndex));
+            for(Integer index: selectedIndex){
+                BasicFunction removedElement = elements.get(index);
+                elements.remove(index);
+                elements.add(0, removedElement);
+            }
+
         } else {
-            elements.add(elements.remove(selectedIndex));
+            for (Integer index: selectedIndex){
+                BasicFunction removedElement = elements.get(index);
+                elements.remove(index);
+                elements.add(removedElement);
+            }
         }
     }
 
@@ -30,32 +50,61 @@ public class ObjectHandler {
     }
 
     public void moveObject(double x, double y) {
-        elements.get(selectedIndex).move(x, y);
-    }
-
-    public void resizeObject(double height, double width) {
-        elements.get(selectedIndex).resize(height, width);
-    }
-
-    public void rotateObject(double angle) {
-        elements.get(selectedIndex).rotate(angle);
-    }
-
-    public void selectObject(double pointX, double pointY) {
-        for(int i = elements.size()-1; i >= 0; i--) {
-            double x = elements.get(i).getX();
-            double y = elements.get(i).getY();
-            double height = elements.get(i).getHeight();
-            double width = elements.get(i).getWidth();
-
-            if (pointX >= x && pointX <= x+width && pointY >= y && pointY <= y+height){
-                selectedIndex = i;
-                break;
-            }
+        for(Integer index: selectedIndex){
+            elements.get(index).moveObject(x, y);
         }
     }
 
-    public void multiSelectObject() {
+    public void resizeObject(double x, double y, double height, double width) {
+        for (Integer index: selectedIndex){
+            elements.get(index).resizeObject(x, y, height, width);
+        }
+
+    }
+
+    public void selectObject(double pointX, double pointY) {
+        selectedIndex.clear();
+        for(int i = 0; i < elements.size(); i++) {
+            if (elements.get(i).isSelectObject(pointX, pointY)){
+                selectedIndex.add(i);
+                break;
+            }
+        }
+        System.out.println(selectedIndex);
+    }
+
+    public void multiSelectObject(javafx.scene.shape.Rectangle rectangle) {
+        selectedIndex.clear();
+        for(int i = 0; i < elements.size(); i++) {
+            if (elements.get(i).isSelectObject(rectangle)){
+                selectedIndex.add(i);
+            }
+        }
+        System.out.println(selectedIndex);
+    }
+
+    public boolean isEmptySelectedElements(){
+        if (selectedIndex.size() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isSelectObject(double x, double y) {
+        for(int i = 0; i < elements.size(); i++) {
+            if (elements.get(i).isSelectObject(x, y) && selectedIndex.contains(i)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public BasicFunction getSelectedObject(){
+        if (selectedIndex.size() > 0){
+            return elements.get(selectedIndex.get(0));
+        } else {
+            return null;
+        }
 
     }
 }
