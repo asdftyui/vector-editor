@@ -74,21 +74,9 @@ public class MouseEventController {
     private void onMousePressed(MouseEvent event){
         startX = event.getSceneX();
         startY = event.getSceneY();
-        if (multiSelectMode) {
-            if (objectHandler.isSelectObject(startX, startY)){
-                state = S.MOVE;
-
-            } else{
-                objectHandler.selectObject(event.getSceneX(), event.getSceneY());
-
-                if (objectHandler.isEmptySelectedElements()){
-                    state = S.SELECT;
-                    setSelectRectangle();
-                } else {
-                    state = S.MOVE;
-                }
-            }
-        } else{
+        if (multiSelectMode && objectHandler.getNumOfSelectedElements() > 1 && objectHandler.isSelectObject(startX, startY)) {
+            state = S.MOVE;
+        }else{
             state = currentMouseState(event);
             if (state.equals(S.DEFAULT) || state.equals(S.MOVE)){
                 objectHandler.selectObject(event.getSceneX(), event.getSceneY());
@@ -96,7 +84,12 @@ public class MouseEventController {
             }
 
             if (element == null) {
-                state = S.DEFAULT;
+                if (multiSelectMode) {
+                    state = S.SELECT;
+                    setSelectRectangle();
+                } else {
+                    state = S.DEFAULT;
+                }
             } else {
                 if (state.equals(S.DEFAULT)) {
                     state = S.MOVE;
@@ -126,10 +119,7 @@ public class MouseEventController {
 
                 updateSelectRectangle(minX, minY, width, height);
                 objectHandler.multiSelectObject(selectRectangle);
-            } else{
-                objectHandler.moveObject(event.getSceneX() - startX, event.getSceneY() - startY);
-                startX = event.getSceneX();
-                startY = event.getSceneY();
+                element = objectHandler.getSelectedObject();
             }
         }
         if (state != S.DEFAULT && state != S.SELECT) {
@@ -198,7 +188,7 @@ public class MouseEventController {
     }
 
     public void onMouseMoved(MouseEvent event) {
-        if (!multiSelectMode && element != null){
+        if (element != null && objectHandler.getNumOfSelectedElements() < 2){
             S state = currentMouseState(event);
             Cursor cursor = getCursorForState(state);
             root.setCursor(cursor);

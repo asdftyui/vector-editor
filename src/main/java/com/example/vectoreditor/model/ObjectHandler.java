@@ -20,7 +20,6 @@ public class ObjectHandler {
             Rectangle rectangle = objectFactory.createRectangle(elements.size()+1);
             elements.add(rectangle);
             root.getChildren().add(rectangle);
-            System.out.println("create rectangle");
         } else if(className.equals("Ellipse")){
             Ellipse ellipse = objectFactory.createEllipse(elements.size()+1);
             elements.add(ellipse);
@@ -70,7 +69,6 @@ public class ObjectHandler {
                 break;
             }
         }
-        System.out.println(selectedIndex);
     }
 
     public void multiSelectObject(javafx.scene.shape.Rectangle rectangle) {
@@ -80,14 +78,10 @@ public class ObjectHandler {
                 selectedIndex.add(i);
             }
         }
-        System.out.println(selectedIndex);
     }
 
-    public boolean isEmptySelectedElements(){
-        if (selectedIndex.size() == 0) {
-            return true;
-        }
-        return false;
+    public int getNumOfSelectedElements(){
+        return selectedIndex.size();
     }
 
     public boolean isSelectObject(double x, double y) {
@@ -105,6 +99,7 @@ public class ObjectHandler {
         } else {
             return null;
         }
-
     }
+
+
 }
