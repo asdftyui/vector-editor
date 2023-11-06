@@ -1,18 +1,22 @@
 package com.example.vectoreditor.model;
 
+import com.example.vectoreditor.controller.PropertyWindowController;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
 public class ObjectHandler {
+    private PropertyWindowController propertyWindowController;
     private ObjectFactory objectFactory = new ObjectFactory();
     private ArrayList<BasicFunction> elements = new ArrayList<>();
     private ArrayList<Integer> selectedIndex = new ArrayList<>();
 
     private BorderPane root;
 
-    public ObjectHandler(BorderPane root) {
+    public ObjectHandler(BorderPane root, PropertyWindowController propertyWindowController) {
         this.root = root;
+        this.propertyWindowController = propertyWindowController;
     }
 
     public void createObject(String className) {
@@ -20,10 +24,12 @@ public class ObjectHandler {
             Rectangle rectangle = objectFactory.createRectangle(elements.size()+1);
             elements.add(rectangle);
             root.getChildren().add(rectangle);
+            new CurrentPropertyDisplay(rectangle, propertyWindowController);
         } else if(className.equals("Ellipse")){
             Ellipse ellipse = objectFactory.createEllipse(elements.size()+1);
             elements.add(ellipse);
             root.getChildren().add(ellipse);
+            new CurrentPropertyDisplay(ellipse, propertyWindowController);
         }
     }
 

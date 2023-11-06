@@ -110,7 +110,7 @@
                     <children>
                         <Label alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="10.0" style="-fx-background-color: #6E6F76;" text="Title" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                             <graphic>
-                                <TextField fx:id="TitleText" alignment="CENTER" prefHeight="130.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
+                                <TextField fx:id="titleText" alignment="CENTER" prefHeight="130.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
                                     <font>
                                         <Font name="Arial" size="15.0" />
                                     </font></TextField>
@@ -121,7 +121,7 @@
                         </Label>
                         <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Slope" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                             <graphic>
-                                <TextField fx:id="SlopeText" alignment="CENTER" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
+                                <TextField fx:id="slopeText" alignment="CENTER" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
                                     <font>
                                         <Font name="Arial" size="15.0" />
                                     </font></TextField>
@@ -132,7 +132,7 @@
                         </Label>
                         <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Height" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                             <graphic>
-                                <TextField fx:id="HeightText" alignment="CENTER" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="te">
+                                <TextField fx:id="heightText" alignment="CENTER" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="te">
                                     <font>
                                         <Font name="Arial" size="15.0" />
                                     </font></TextField>
@@ -143,7 +143,7 @@
                         </Label>
                         <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Width" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <graphic>
-                                <TextField fx:id="WidthText" alignment="CENTER" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="st">
+                                <TextField fx:id="widthText" alignment="CENTER" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="st">
                                     <font>
                                         <Font name="Arial" size="15.0" />
                                     </font></TextField>
@@ -162,7 +162,7 @@
                             </font></Button>
                         <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Color" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                             <graphic>
-                                <ColorPicker prefHeight="70.0" prefWidth="260.0" style="-fx-font-family: &quot;Arial&quot;; -fx-font-size: 12px; -fx-background-color: #6E6F76;" />
+                                <ColorPicker fx:id="color" prefHeight="70.0" prefWidth="260.0" style="-fx-font-family: &quot;Arial&quot;; -fx-font-size: 12px; -fx-background-color: #6E6F76;" />
                             </graphic>
                             <font>
                                 <Font name="Arial" size="16.0" />

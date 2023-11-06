@@ -4,6 +4,8 @@ import com.example.vectoreditor.model.ObjectHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 
@@ -25,12 +27,30 @@ public class MainController implements Initializable {
     private Button textBtn;
     @FXML
     private Button imageBtn;
+    @FXML
+    private TextField titleText;
+    @FXML
+    private TextField widthText;
+    @FXML
+    private TextField heightText;
+    @FXML
     private ObjectHandler objectHandler;
     private MouseEventController mouseEventController;
+    private PropertyWindowController propertyWindowController;
+    @FXML
+    private Button frontButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private ColorPicker color;
+    @FXML
+    private Button delButton;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        objectHandler = new ObjectHandler(root);
+        propertyWindowController = new PropertyWindowController(titleText, widthText, heightText, frontButton, backButton, color, delButton);
+        objectHandler = new ObjectHandler(root, propertyWindowController);
         mouseEventController = new MouseEventController(root, objectHandler);
         rectangleBtn.setOnMouseClicked(e -> {objectHandler.createObject("Rectangle");});
         ellipseBtn.setOnMouseClicked(e -> {objectHandler.createObject("Ellipse");});

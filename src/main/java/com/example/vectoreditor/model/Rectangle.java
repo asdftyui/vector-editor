@@ -3,14 +3,17 @@ package com.example.vectoreditor.model;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
+import java.util.ArrayList;
 import java.util.Map;
 
-public class Rectangle extends javafx.scene.shape.Rectangle implements BasicFunction{
+public class Rectangle extends javafx.scene.shape.Rectangle implements BasicFunction, Subject{
+    private ArrayList<Observer> observers;
     private String title;
 
     public Rectangle(int title_num){
         super(300, 300, 200, 200);
         this.title = "layer" + title_num;
+        this.observers = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -39,6 +42,7 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements BasicFunc
     public void moveObject(double x, double y) {
         setX(getX() + x);
         setY(getY() + y);
+        notifyObservers();
     }
 
     @Override
@@ -46,11 +50,13 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements BasicFunc
         moveObject(deltaX, deltaY);
         setHeight(height);
         setWidth(width);
+        notifyObservers();
     }
 
     @Override
     public boolean isSelectObject(double pointX, double pointY) {
         if (contains(pointX, pointY)){
+            notifyObservers();
             return true;
         }
         return false;
@@ -62,8 +68,29 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements BasicFunc
 
         if (intersection.getBoundsInLocal().getWidth() != -1 || intersection.getBoundsInLocal().getHeight() != -1) {
             // 교차된 영역이 비어있지 않으면 true를 반환
+            notifyObservers();
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        int i = observers.indexOf(o);
+        if (i >= 0){
+            observers.remove(i);
+        }
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o: observers){
+            o.update(getAttribute());
+        }
     }
 }
