@@ -18,9 +18,10 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.ToggleButton?>
+
 <BorderPane fx:id="root" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.MainController">
     <center>
-        <Canvas fx:id="canvas" height="700.0" width="1130.0" BorderPane.alignment="CENTER" />
+        <Canvas BorderPane.alignment="CENTER" />
     </center>
     <left>
         <VBox fx:id="leftVbox" prefHeight="700.0" prefWidth="60.0" style="-fx-background-color: #2e2f30;" BorderPane.alignment="CENTER">
@@ -181,9 +182,9 @@
         </VBox>
     </right>
     <top>
-        <HBox prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2e2f30;" BorderPane.alignment="CENTER" />
+        <HBox fx:id="topHbox" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2e2f30;" BorderPane.alignment="CENTER" />
     </top>
     <bottom>
-        <HBox prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2e2f30;" BorderPane.alignment="CENTER" />
+        <HBox fx:id="bottomHbox" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2e2f30;" BorderPane.alignment="CENTER" />
     </bottom>
 </BorderPane>

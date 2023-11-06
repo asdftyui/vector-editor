@@ -35,8 +35,6 @@ public class MainController implements Initializable {
     private TextField heightText;
     @FXML
     private ObjectHandler objectHandler;
-    private MouseEventController mouseEventController;
-    private PropertyWindowController propertyWindowController;
     @FXML
     private Button frontButton;
     @FXML
@@ -45,13 +43,17 @@ public class MainController implements Initializable {
     private ColorPicker color;
     @FXML
     private Button delButton;
-
+    private MouseEventController mouseEventController;
+    private PropertyWindowController propertyWindowController;
+    private PropertyWindowEventController propertyWindowEventController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        propertyWindowController = new PropertyWindowController(titleText, widthText, heightText, frontButton, backButton, color, delButton);
+        propertyWindowController = new PropertyWindowController(titleText, widthText, heightText, color);
         objectHandler = new ObjectHandler(root, propertyWindowController);
         mouseEventController = new MouseEventController(root, objectHandler);
+        propertyWindowEventController = new PropertyWindowEventController(objectHandler, titleText, widthText, heightText, frontButton, backButton, color, delButton);
+
         rectangleBtn.setOnMouseClicked(e -> {objectHandler.createObject("Rectangle");});
         ellipseBtn.setOnMouseClicked(e -> {objectHandler.createObject("Ellipse");});
         mouseEventController.setMouseEvent(false);
@@ -62,5 +64,6 @@ public class MainController implements Initializable {
                 mouseEventController.setMouseEvent(false);
             }
         });
+        propertyWindowEventController.setEventHandler();
     }
 }

@@ -39,6 +39,26 @@ public class Rectangle extends javafx.scene.shape.Rectangle implements BasicFunc
     }
 
     @Override
+    public void setTitle(String title) {
+        this.title = title;
+        notifyObservers();
+    }
+
+    @Override
+    public void setColor(Color color) {
+        setFill(color);
+    }
+
+    @Override
+    public void setZOrder(boolean front) {
+        if (front){
+            toFront();
+        } else {
+            toBack();
+        }
+    }
+
+    @Override
     public void moveObject(double x, double y) {
         setX(getX() + x);
         setY(getY() + y);

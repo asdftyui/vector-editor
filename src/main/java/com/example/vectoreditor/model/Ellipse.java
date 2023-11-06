@@ -56,6 +56,26 @@ public class Ellipse extends javafx.scene.shape.Ellipse implements BasicFunction
     }
 
     @Override
+    public void setTitle(String title) {
+        this.title = title;
+        notifyObservers();
+    }
+
+    @Override
+    public void setColor(Color color) {
+        setFill(color);
+    }
+
+    @Override
+    public void setZOrder(boolean front) {
+        if (front) {
+            toFront();
+        } else{
+            toBack();
+        }
+    }
+
+    @Override
     public void moveObject(double x, double y) {
         setCenterX(x+getCenterX());
         setCenterY(y+getCenterY());

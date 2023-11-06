@@ -7,6 +7,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -58,6 +59,7 @@ public class MouseEventController {
         selectRectangle.setWidth(0);
         selectRectangle.setHeight(0);
         selectRectangle.setVisible(true);
+        selectRectangle.toFront();
     }
 
     public void setMouseEvent(boolean mode){
@@ -252,19 +254,19 @@ public class MouseEventController {
     }
 
     private boolean isLeftResizeZone(MouseEvent event) {
-        return intersect(minX, event.getSceneX());
+        return intersect(minX, event.getSceneX()) && event.getSceneY() >= minY && event.getSceneY() <= minY + height;
     }
 
     private boolean isRightResizeZone(MouseEvent event) {
-        return intersect(minX+width, event.getSceneX());
+        return intersect(minX+width, event.getSceneX()) && event.getSceneY() >= minY && event.getSceneY() <= minY + height;
     }
 
     private boolean isTopResizeZone(MouseEvent event) {
-        return intersect(minY, event.getSceneY());
+        return intersect(minY, event.getSceneY()) && event.getSceneX() >= minX && event.getSceneX() <= minX + width;
     }
 
     private boolean isBottomResizeZone(MouseEvent event) {
-        return intersect(minY+height, event.getSceneY());
+        return intersect(minY+height, event.getSceneY()) && event.getSceneX() >= minX && event.getSceneX() <= minX + width;
     }
 
     private boolean intersect(double side, double point) {
