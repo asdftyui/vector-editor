@@ -4,11 +4,8 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,6 +16,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.ToggleButton?>
 
 <BorderPane fx:id="root" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vectoreditor.controller.MainController">
     <center>
@@ -96,24 +95,23 @@
     <right>
         <VBox fx:id="rightVbox" prefHeight="700.0" prefWidth="300.0" style="-fx-background-color: #2e2f30;" BorderPane.alignment="CENTER">
             <children>
-                <GridPane alignment="CENTER" hgap="10.0" prefHeight="770.0" prefWidth="300.0" vgap="10.0" VBox.vgrow="ALWAYS">
+                <GridPane alignment="CENTER" hgap="10.0" vgap="10.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="170.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="170.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="241.60001220703123" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="120.79999389648438" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="260.80000000000007" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="237.6000244140625" minHeight="0.0" prefHeight="95.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="265.5999877929688" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="78.39999999999998" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="78.39999999999998" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="241.60001220703123" minHeight="10.0" prefHeight="175" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="120.79999389648438" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="260.80000000000007" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="237.6000244140625" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="265.5999877929688" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="78.39999999999998" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <Label alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="10.0" style="-fx-background-color: #6E6F76;" text="Title" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                             <graphic>
-                                <TextField fx:id="titleText" alignment="CENTER" prefHeight="70.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
+                                <TextField fx:id="titleText" alignment="CENTER" prefHeight="130.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
                                     <font>
                                         <Font name="Arial" size="15.0" />
                                     </font></TextField>
@@ -133,21 +131,9 @@
 <!--                                <Font name="Arial" size="16.0" />-->
 <!--                            </font>-->
 <!--                        </Label>-->
-                        <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Height" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Height" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                             <graphic>
-                                <TextField fx:id="heightText" alignment="CENTER" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="te">
-                                    <font>
-                                        <Font name="Arial" size="15.0" />
-                                    </font>
-                        </TextField>
-                            </graphic>
-                            <font>
-                                <Font name="Arial" size="16.0" />
-                            </font>
-                        </Label>
-                        <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Width" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <graphic>
-                                <TextField fx:id="widthText" alignment="CENTER" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="st">
+                                <TextField fx:id="heightText" alignment="CENTER" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="te">
                                     <font>
                                         <Font name="Arial" size="15.0" />
                                     </font></TextField>
@@ -156,43 +142,26 @@
                                 <Font name="Arial" size="16.0" />
                             </font>
                         </Label>
-                        <Button fx:id="frontButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #6E6F76;" text="&lt; FRONT" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Width" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <graphic>
+                                <TextField fx:id="widthText" alignment="CENTER" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="st">
+                                    <font>
+                                        <Font name="Arial" size="15.0" />
+                                    </font></TextField>
+                            </graphic>
+                            <font>
+                                <Font name="Arial" size="16.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="frontButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #6E6F76;" text="&lt; FRONT" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                             <font>
                                 <Font name="Arial" size="16.0" />
                             </font></Button>
-                        <Button fx:id="backButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #6E6F76;" text="BACK &gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button fx:id="backButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #6E6F76;" text="BACK &gt;" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                             <font>
                                 <Font name="Arial" size="16.0" />
                             </font></Button>
-                  <Label alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="10.0" style="-fx-background-color: #6E6F76;" text="Text" textFill="WHITE" GridPane.columnSpan="2" GridPane.rowIndex="4">
-                     <graphic>
-                        <TextField fx:id="textv" alignment="CENTER" prefHeight="70.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
-                           <font>
-                              <Font name="Arial" size="15.0" />
-                           </font>
-                        </TextField>
-                     </graphic>
-                     <font>
-                        <Font name="Arial" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="BOTTOM" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #6E6F76;" text="Font Size" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Arial" size="16.0" />
-                     </font>
-                     <graphic>
-                        <Slider fx:id="fontsize" prefHeight="20.0" prefWidth="115.0" />
-                     </graphic>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="BOTTOM" prefHeight="60.0" prefWidth="125.0" style="-fx-background-color: #6E6F76;" text="Font" textFill="WHITE" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Arial" size="16.0" />
-                     </font>
-                     <graphic>
-                        <ComboBox fx:id="fontkind" prefWidth="115.0" />
-                     </graphic>
-                  </Label>
-                        <Label contentDisplay="BOTTOM" prefWidth="259.0" style="-fx-background-color: #6E6F76;" text="Color" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Color" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                             <graphic>
                                 <ColorPicker fx:id="color" prefHeight="70.0" prefWidth="260.0" style="-fx-font-family: &quot;Arial&quot;; -fx-font-size: 12px; -fx-background-color: #6E6F76;" />
                             </graphic>
@@ -200,13 +169,13 @@
                                 <Font name="Arial" size="16.0" />
                             </font>
                         </Label>
-                        <Button fx:id="delButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="360.0" style="-fx-background-color: #6E6F76;" text="DELETE" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                        <Button fx:id="delButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="360.0" style="-fx-background-color: #6E6F76;" text="DELETE" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                             <font>
                                 <Font name="Arial" size="16.0" />
                             </font></Button>
                     </children>
                     <padding>
-                        <Insets bottom="50.0" left="20.0" right="20.0" top="5.0" />
+                        <Insets bottom="100.0" left="20.0" right="20.0" />
                     </padding>
                 </GridPane>
             </children>

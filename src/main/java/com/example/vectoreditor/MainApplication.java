@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 
 public class MainApplication extends Application {
     public static void main(String[] args) {
@@ -19,7 +21,7 @@ public class MainApplication extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("app.fxml"));
         Parent root = loader.load();
-        
+
         double screenWidth = (Screen.getPrimary().getBounds().getWidth())*0.9;
         double screenHeight = (Screen.getPrimary().getBounds().getHeight())*0.9;
 
@@ -32,5 +34,10 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
+
+        Canvas canvas = (Canvas) ((BorderPane) root).getCenter();
+        Rectangle clip = new Rectangle(canvas.getWidth(), canvas.getHeight());
+        canvas.setClip(clip);
+        System.out.println(root.localToScene(canvas.getBoundsInLocal()).getMinX());
     }
 }
