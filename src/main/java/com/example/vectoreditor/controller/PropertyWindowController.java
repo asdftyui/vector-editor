@@ -18,9 +18,12 @@ public class PropertyWindowController {
     }
 
     public void setPropertyWindow(Map<String, String> attributes){
+        double widthValue= Double.parseDouble(attributes.get("width"));
+        double heightValue = Double.parseDouble(attributes.get("height"));
+
         title.setText(attributes.get("title"));
-        width.setText(attributes.get("width"));
-        height.setText(attributes.get("height"));
+        width.setText(Double.toString(Math.round(Math.abs(widthValue))));
+        height.setText(Double.toString(Math.round(Math.abs(heightValue))));
         color.setValue(Color.web(attributes.get("color")));
     }
 }

@@ -1,14 +1,15 @@
 package com.example.vectoreditor.controller;
 
 import com.example.vectoreditor.model.BasicFunction;
+import com.example.vectoreditor.model.Line;
 import com.example.vectoreditor.model.ObjectHandler;
 
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class MouseEventController {
@@ -79,7 +80,12 @@ public class MouseEventController {
         if (multiSelectMode && objectHandler.getNumOfSelectedElements() > 1 && objectHandler.isSelectObject(startX, startY)) {
             state = S.MOVE;
         }else{
-            state = currentMouseState(event);
+            if (element instanceof Line){
+                state = currentMouseStateLine(event);
+            }else{
+                state = currentMouseState(event);
+            }
+
             if (state.equals(S.DEFAULT) || state.equals(S.MOVE)){
                 objectHandler.selectObject(event.getSceneX(), event.getSceneY());
                 element = objectHandler.getSelectedObject();
@@ -136,37 +142,49 @@ public class MouseEventController {
                 double deltaX = 0;
                 double deltaY = 0;
 
-                // Right Resize
-                if (state == S.E_RESIZE || state == S.NE_RESIZE || state == S.SE_RESIZE) {
-                    newW = event.getSceneX() - minX;
-                }
-                // Left Resize
-                if (state == S.W_RESIZE || state == S.NW_RESIZE || state == S.SW_RESIZE) {
-                    deltaX = event.getSceneX() - minX;
-                    newW = width + minX - event.getSceneX();
-                }
+                if (element instanceof Line){
+                    if (state == S.N_RESIZE){
+                        deltaX = Math.min(event.getSceneX(), minX+width);
+                        deltaY = event.getSceneY();
+                        newW = 0;
+                    } else if (state == S.S_RESIZE) {
+                        deltaX = Math.max(event.getSceneX(), minX);
+                        deltaY = event.getSceneY();
+                        newW = -1;
+                    }
+                } else {
+                    // Right Resize
+                    if (state == S.E_RESIZE || state == S.NE_RESIZE || state == S.SE_RESIZE) {
+                        newW = event.getSceneX() - minX;
+                    }
+                    // Left Resize
+                    if (state == S.W_RESIZE || state == S.NW_RESIZE || state == S.SW_RESIZE) {
+                        deltaX = event.getSceneX() - minX;
+                        newW = width + minX - event.getSceneX();
+                    }
 
-                // Bottom Resize
-                if (state == S.S_RESIZE || state == S.SE_RESIZE || state == S.SW_RESIZE) {
-                    newH = event.getSceneY() - minY;
-                }
-                // Top Resize
-                if (state == S.N_RESIZE || state == S.NW_RESIZE || state == S.NE_RESIZE) {
-                    deltaY = event.getSceneY() - minY;
-                    newH = height + minY - event.getSceneY();
-                }
+                    // Bottom Resize
+                    if (state == S.S_RESIZE || state == S.SE_RESIZE || state == S.SW_RESIZE) {
+                        newH = event.getSceneY() - minY;
+                    }
+                    // Top Resize
+                    if (state == S.N_RESIZE || state == S.NW_RESIZE || state == S.NE_RESIZE) {
+                        deltaY = event.getSceneY() - minY;
+                        newH = height + minY - event.getSceneY();
+                    }
 
-                //min valid rect Size Check
-                if (newW < MIN_W) {
-                    if (state == S.W_RESIZE || state == S.NW_RESIZE || state == S.SW_RESIZE)
-                        deltaX = width - MIN_W;
-                    newW = MIN_W;
-                }
+                    //min valid rect Size Check
+                    if (newW < MIN_W) {
+                        if (state == S.W_RESIZE || state == S.NW_RESIZE || state == S.SW_RESIZE)
+                            deltaX = width - MIN_W;
+                        newW = MIN_W;
+                    }
 
-                if (newH < MIN_H) {
-                    if (state == S.N_RESIZE || state == S.NW_RESIZE || state == S.NE_RESIZE)
-                        deltaY = height - MIN_H;
-                    newH = MIN_H;
+                    if (newH < MIN_H) {
+                        if (state == S.N_RESIZE || state == S.NW_RESIZE || state == S.NE_RESIZE)
+                            deltaY = height - MIN_H;
+                        newH = MIN_H;
+                    }
                 }
                 objectHandler.resizeObject(deltaX, deltaY, newH, newW);
                 setProperties();
@@ -191,9 +209,15 @@ public class MouseEventController {
 
     public void onMouseMoved(MouseEvent event) {
         if (element != null && objectHandler.getNumOfSelectedElements() < 2){
-            S state = currentMouseState(event);
-            Cursor cursor = getCursorForState(state);
-            root.setCursor(cursor);
+            if (element instanceof Line){
+                S state = currentMouseStateLine(event);
+                Cursor cursor = getCursorForState(state);
+                root.setCursor(cursor);
+            } else {
+                S state = currentMouseState(event);
+                Cursor cursor = getCursorForState(state);
+                root.setCursor(cursor);
+            }
         }
     }
 
@@ -241,7 +265,6 @@ public class MouseEventController {
 
         return state;
     }
-
     private boolean isMoveZone(MouseEvent event) {
         double xPos = event.getSceneX();
         double yPos = event.getSceneY();
@@ -271,6 +294,45 @@ public class MouseEventController {
 
     private boolean intersect(double side, double point) {
         return side + MARGIN > point && side - MARGIN < point;
+    }
+
+    private S currentMouseStateLine(MouseEvent event) {
+        S state = S.DEFAULT;
+
+        if (isMoveZoneLine(event)){return S.MOVE;}
+
+        boolean start = isStartZone(event);
+        boolean end = isEndZone(event);
+
+        if (start){
+            state = S.N_RESIZE;
+        } else if (end){
+            state = S.S_RESIZE;
+        }
+
+        return state;
+    }
+
+    private boolean isMoveZoneLine(MouseEvent event){
+        double x = event.getSceneX();
+        double y = event.getSceneY();
+
+        if (y <= height/width*x + minY+MARGIN - height/width*(minX) && y >= height/width*x + minY-MARGIN - height/width*(minX)
+        && x >= minX+MARGIN && x <= minX+width-MARGIN && y >= minY+MARGIN && y <= minY+height-MARGIN){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    private boolean isStartZone(MouseEvent event){
+        Circle circle = new Circle(minX, minY, MARGIN);
+        return circle.contains(event.getSceneX(), event.getSceneY());
+    }
+
+    private boolean isEndZone(MouseEvent event){
+        Circle circle = new Circle(minX+width, minY+height, MARGIN);
+        return circle.contains(event.getSceneX(), event.getSceneY());
     }
 }
 

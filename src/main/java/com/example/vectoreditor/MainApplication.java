@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -31,5 +33,8 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
+
+        Canvas canvas = (Canvas) ((BorderPane) root).getCenter();
+        System.out.println(root.localToScene(canvas.getBoundsInLocal()).getMinX());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.vectoreditor.model;
+package com.example.vectoreditor.controller;
 
 import java.util.Map;
 

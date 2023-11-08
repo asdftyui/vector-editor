@@ -10,4 +10,9 @@ public class ObjectFactory implements ObjectAbstractFactory{
     public Ellipse createEllipse(int title_num) {
         return new Ellipse(title_num);
     }
+
+    @Override
+    public Line createLine(int title_num) {
+        return new Line(title_num);
+    }
 }

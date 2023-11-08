@@ -56,6 +56,8 @@ public class MainController implements Initializable {
 
         rectangleBtn.setOnMouseClicked(e -> {objectHandler.createObject("Rectangle");});
         ellipseBtn.setOnMouseClicked(e -> {objectHandler.createObject("Ellipse");});
+        lineBtn.setOnMouseClicked(e -> {objectHandler.createObject("Line");});
+
         mouseEventController.setMouseEvent(false);
         selectBtn.setOnAction(e -> {
             if (selectBtn.isSelected()){

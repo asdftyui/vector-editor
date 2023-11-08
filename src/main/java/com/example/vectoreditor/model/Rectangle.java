@@ -1,5 +1,6 @@
 package com.example.vectoreditor.model;
 
+import com.example.vectoreditor.controller.Observer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 

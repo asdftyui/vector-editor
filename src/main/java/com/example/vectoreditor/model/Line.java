@@ -7,52 +7,34 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Ellipse extends javafx.scene.shape.Ellipse implements BasicFunction, Subject{
+public class Line extends javafx.scene.shape.Line implements BasicFunction, Subject {
     private ArrayList<Observer> observers;
     private String title;
 
-    public Ellipse(int title_num){
-        super(300, 300, 100, 100);
+    public Line(int title_num){
+        super(300, 300, 500, 500);
         this.title = "layer" + title_num;
         this.observers = new ArrayList<>();
     }
 
-    public String getTitle() {
+    public String getTitle(){
         return title;
-    }
-
-    public double getX() {
-        return getCenterX() - getRadiusX();
-    }
-
-    public double getY() {
-        return getCenterY() - getRadiusY();
-    }
-
-    public double getHeight() {
-        return getRadiusY()*2;
-    }
-
-    public double getWidth() {
-        return getRadiusX()*2;
     }
 
     @Override
     public Map<String, String> getAttribute() {
-        Color color = (Color) getFill();
+        Color color = (Color) getStroke();
 
         Map<String, String> attribute = Map.of(
                 "title", getTitle(),
-                "x", Double.toString(getX()),
-                "y", Double.toString(getY()),
-                "height", Double.toString(getHeight()),
-                "width", Double.toString(getWidth()),
+                "x", Double.toString(getStartX()),
+                "y", Double.toString(getStartY()),
+                "height", Double.toString(getEndY() - getStartY()),
+                "width", Double.toString(getEndX() - getStartX()),
                 "color", "#" + Integer.toHexString((int) (color.getRed() * 255))
                         + Integer.toHexString((int) (color.getGreen() * 255))
                         + Integer.toHexString((int) (color.getBlue() * 255))
-
         );
-
         return attribute;
     }
 
@@ -64,43 +46,54 @@ public class Ellipse extends javafx.scene.shape.Ellipse implements BasicFunction
 
     @Override
     public void setColor(Color color) {
-        setFill(color);
+        setStroke(color);
     }
 
     @Override
     public void setZOrder(boolean front) {
-        if (front) {
+        if (front){
             toFront();
-        } else{
+        } else {
             toBack();
         }
     }
 
     @Override
     public void moveObject(double x, double y) {
-        setCenterX(x+getCenterX());
-        setCenterY(y+getCenterY());
+        setStartX(getStartX() + x);
+        setStartY(getStartY() + y);
+        setEndX(getEndX()+x);
+        setEndY(getEndY()+y);
         notifyObservers();
     }
 
     @Override
     public void resizeObject(double deltaX, double deltaY, double height, double width) {
-        double minX = getX() + deltaX;
-        double minY = getY() + deltaY;
-        setCenterX(minX + width/2);
-        setCenterY(minY + height/2);
-        setRadiusX(width/2);
-        setRadiusY(height/2);
+        if (width < 0){
+            setEndX(deltaX);
+            setEndY(deltaY);
+        } else {
+            setStartX(deltaX);
+            setStartY(deltaY);
+        }
         notifyObservers();
     }
 
     @Override
     public boolean isSelectObject(double pointX, double pointY) {
-        if (contains(pointX, pointY)){
-            notifyObservers();
-            return true;
+        double x = pointX;
+        double y = pointY;
+        double height = getEndY() - getStartY();
+        double width = getEndX() - getStartX();
+        double minX = getStartX();
+        double minY = getStartY();
+
+        if (height < 0){
+            return y <= height/width*x + minY+8 - height/width*minX && y >= height/width*x + minY-8 - height/width*(minX)
+                    && x >= minX && x <= minX+width && y <= minY && y >= minY+height;
         }
-        return false;
+        return y <= height/width*x + minY+8 - height/width*minX && y >= height/width*x + minY-8 - height/width*(minX)
+                && x >= minX && x <= minX+width && y >= minY && y <= minY+height;
     }
 
     @Override
@@ -114,7 +107,6 @@ public class Ellipse extends javafx.scene.shape.Ellipse implements BasicFunction
         }
         return false;
     }
-
 
     @Override
     public void registerObserver(Observer o) {

@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.Line;
 import com.example.vectoreditor.model.ObjectHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -45,7 +46,7 @@ public class PropertyWindowEventController {
     }
 
     private void resizeOnKeyReleased(KeyEvent event){
-        if (event.getCode() == KeyCode.ENTER && objectHandler.getNumOfSelectedElements() == 1){
+        if (event.getCode() == KeyCode.ENTER && objectHandler.getNumOfSelectedElements() == 1 && !(objectHandler.getSelectedObject() instanceof Line)){
             String newWidth = width.getText();
             String newHeight = height.getText();
             objectHandler.resizeObject(0, 0, Double.parseDouble(newHeight), Double.parseDouble(newWidth));

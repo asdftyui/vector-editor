@@ -120,17 +120,17 @@
                                 <Font name="Arial" size="16.0" />
                             </font>
                         </Label>
-                        <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Slope" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                            <graphic>
-                                <TextField fx:id="slopeText" alignment="CENTER" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">
-                                    <font>
-                                        <Font name="Arial" size="15.0" />
-                                    </font></TextField>
-                            </graphic>
-                            <font>
-                                <Font name="Arial" size="16.0" />
-                            </font>
-                        </Label>
+<!--                        <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Slope" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">-->
+<!--                            <graphic>-->
+<!--                                <TextField fx:id="slopeText" alignment="CENTER" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="test">-->
+<!--                                    <font>-->
+<!--                                        <Font name="Arial" size="15.0" />-->
+<!--                                    </font></TextField>-->
+<!--                            </graphic>-->
+<!--                            <font>-->
+<!--                                <Font name="Arial" size="16.0" />-->
+<!--                            </font>-->
+<!--                        </Label>-->
                         <Label contentDisplay="BOTTOM" style="-fx-background-color: #6E6F76;" text="Height" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                             <graphic>
                                 <TextField fx:id="heightText" alignment="CENTER" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #6E6F76; -fx-text-fill: #ffffff;" text="te">

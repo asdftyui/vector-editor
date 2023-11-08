@@ -1,5 +1,6 @@
 package com.example.vectoreditor.model;
 
+import com.example.vectoreditor.controller.CurrentPropertyDisplay;
 import com.example.vectoreditor.controller.PropertyWindowController;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -8,10 +9,8 @@ import java.util.ArrayList;
 
 public class ObjectHandler {
     private PropertyWindowController propertyWindowController;
-    private ObjectFactory objectFactory = new ObjectFactory();
     private ArrayList<BasicFunction> elements = new ArrayList<>();
     private ArrayList<BasicFunction> selectedIndex = new ArrayList<>();
-
     private BorderPane root;
 
     public ObjectHandler(BorderPane root, PropertyWindowController propertyWindowController) {
@@ -21,15 +20,20 @@ public class ObjectHandler {
 
     public void createObject(String className) {
         if (className.equals("Rectangle")){
-            Rectangle rectangle = objectFactory.createRectangle(elements.size()+1);
+            Rectangle rectangle = new Rectangle(elements.size()+1);
             elements.add(0, rectangle);
             root.getChildren().add(rectangle);
             new CurrentPropertyDisplay(rectangle, propertyWindowController);
         } else if(className.equals("Ellipse")){
-            Ellipse ellipse = objectFactory.createEllipse(elements.size()+1);
+            Ellipse ellipse = new Ellipse(elements.size()+1);
             elements.add(0, ellipse);
             root.getChildren().add(ellipse);
             new CurrentPropertyDisplay(ellipse, propertyWindowController);
+        } else if(className.equals("Line")){
+            Line line = new Line(elements.size()+1);
+            elements.add(0, line);
+            root.getChildren().add(line);
+            new CurrentPropertyDisplay(line, propertyWindowController);
         }
     }
 
@@ -77,8 +81,8 @@ public class ObjectHandler {
     }
 
     public void setColor(Color color){
-        if (getNumOfSelectedElements() == 1){
-            selectedIndex.get(0).setColor(color);
+        for (BasicFunction element: selectedIndex){
+            element.setColor(color);
         }
     }
 
