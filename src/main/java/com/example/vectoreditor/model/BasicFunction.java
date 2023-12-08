@@ -1,6 +1,5 @@
 package com.example.vectoreditor.model;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Map;
