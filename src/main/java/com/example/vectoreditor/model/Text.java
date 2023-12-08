@@ -3,7 +3,6 @@ package com.example.vectoreditor.model;
 import com.example.vectoreditor.controller.Observer;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextBoundsType;

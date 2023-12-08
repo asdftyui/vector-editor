@@ -1,17 +1,14 @@
 package com.example.vectoreditor.model;
 
-import com.example.vectoreditor.controller.CurrentPropertyDisplay;
 import com.example.vectoreditor.controller.PropertyWindowController;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight; 
-
 
 import java.util.ArrayList;
 
 public class ObjectHandler {
     private PropertyWindowController propertyWindowController;
+    private ObjectFactory objectFactory;
     private ArrayList<BasicFunction> elements = new ArrayList<>();
     private ArrayList<BasicFunction> selectedIndex = new ArrayList<>();
     private BorderPane root;
@@ -19,6 +16,7 @@ public class ObjectHandler {
     public ObjectHandler(BorderPane root, PropertyWindowController propertyWindowController) {
         this.root = root;
         this.propertyWindowController = propertyWindowController;
+        this.objectFactory = new ObjectFactory();
     }
     
     public void createObject(String className) {
@@ -26,39 +24,8 @@ public class ObjectHandler {
     }
     
     public void createObject(String className, String imagePath) {
-        if (className.equals("Rectangle")){
-            Rectangle rectangle = new Rectangle(elements.size()+1);
-            elements.add(0, rectangle);
-            root.getChildren().add(rectangle);
-            new CurrentPropertyDisplay(rectangle, propertyWindowController);
-        } else if(className.equals("Ellipse")){
-            Ellipse ellipse = new Ellipse(elements.size()+1);
-            elements.add(0, ellipse);
-            root.getChildren().add(ellipse);
-            new CurrentPropertyDisplay(ellipse, propertyWindowController);
-        } else if(className.equals("Line")){
-            Line line = new Line(elements.size()+1);
-            elements.add(0, line);
-            root.getChildren().add(line);
-            new CurrentPropertyDisplay(line, propertyWindowController);
-        } else if(className.equals("ImageM")) {
-        	if (imagePath != null && !imagePath.isEmpty()) {
-        		double canvasWidth = root.getWidth(); // 캔버스의 너비를 가져옵니다.
-                double canvasHeight = root.getHeight();
-                ImageM imageM = new ImageM(imagePath, elements.size() + 1, canvasWidth*0.4, canvasHeight*0.4);
-                imageM.centerImageOnCanvas(canvasWidth, canvasHeight);
-                elements.add(0, imageM);
-                root.getChildren().add(imageM);
-                new CurrentPropertyDisplay(imageM, propertyWindowController);
-            } else {
-                System.out.println("Image path is not provided for ImageM object creation.");
-            }
-        } else if(className.equals("Text")) {
-            Text text = new Text(elements.size() + 1);
-            elements.add(0, text); // elements 리스트에 추가
-            root.getChildren().add(text); // UI에 텍스트 추가
-            new CurrentPropertyDisplay(text, propertyWindowController);
-        }
+        BasicFunction element = objectFactory.createObject(root, propertyWindowController, className, elements.size()+1, imagePath);
+        elements.add(0, element);
     }
 
     public void changeZOrder(boolean front) {
