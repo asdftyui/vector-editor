@@ -1,31 +1,25 @@
 package com.example.vectoreditor.model;
 
-import com.example.vectoreditor.controller.PropertyWindowController;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
 public class ObjectHandler {
-    private PropertyWindowController propertyWindowController;
-    private ObjectFactory objectFactory;
     private ArrayList<BasicFunction> elements = new ArrayList<>();
     private ArrayList<BasicFunction> selectedIndex = new ArrayList<>();
     private BorderPane root;
 
-    public ObjectHandler(BorderPane root, PropertyWindowController propertyWindowController) {
+    public ObjectHandler(BorderPane root) {
         this.root = root;
-        this.propertyWindowController = propertyWindowController;
-        this.objectFactory = new ObjectFactory();
     }
-    
-    public void createObject(String className) {
-        createObject(className, null);
+
+    public int getElementSize() {
+        return elements.size();
     }
-    
-    public void createObject(String className, String imagePath) {
-        BasicFunction element = objectFactory.createObject(root, propertyWindowController, className, elements.size()+1, imagePath);
-        elements.add(0, element);
+
+    public void addElement(BasicFunction element) {
+        elements.add(element);
     }
 
     public void changeZOrder(boolean front) {

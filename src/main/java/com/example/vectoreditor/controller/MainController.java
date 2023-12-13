@@ -1,5 +1,6 @@
 package com.example.vectoreditor.controller;
 
+import com.example.vectoreditor.model.ObjectFactory;
 import com.example.vectoreditor.model.ObjectHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,18 +57,21 @@ public class MainController implements Initializable {
     private MouseEventController mouseEventController;
     private PropertyWindowController propertyWindowController;
     private PropertyWindowEventController propertyWindowEventController;
+    private ObjectFactory objectFactory;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     	fontkind.getItems().addAll("Arial", "Verdana", "Times New Roman", "Comic Sans MS");
         propertyWindowController = new PropertyWindowController(titleText, widthText, heightText, color, textv, fontsize, fontkind);
-        objectHandler = new ObjectHandler(root, propertyWindowController);
+        objectHandler = new ObjectHandler(root);
+
+        objectFactory = new ObjectFactory(objectHandler, root, propertyWindowController);
         mouseEventController = new MouseEventController(root, objectHandler);
         propertyWindowEventController = new PropertyWindowEventController(objectHandler, titleText, widthText, heightText, frontButton, backButton, color, delButton, textv, fontsize, fontkind);
 
-        rectangleBtn.setOnMouseClicked(e -> {objectHandler.createObject("Rectangle");});
-        ellipseBtn.setOnMouseClicked(e -> {objectHandler.createObject("Ellipse");});
-        lineBtn.setOnMouseClicked(e -> {objectHandler.createObject("Line");});
+        rectangleBtn.setOnMouseClicked(e -> {objectFactory.createRectangle();});
+        ellipseBtn.setOnMouseClicked(e -> {objectFactory.createEllipse();});
+        lineBtn.setOnMouseClicked(e -> {objectFactory.createLine();});
         imageBtn.setOnMouseClicked(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Image File");
@@ -77,10 +81,10 @@ public class MainController implements Initializable {
             File selectedFile = fileChooser.showOpenDialog(root.getScene().getWindow());
             if (selectedFile != null) {
                 String imagePath = selectedFile.getAbsolutePath();
-                objectHandler.createObject("ImageM", imagePath);
+                objectFactory.createImageM(imagePath);
             }
         });
-        textBtn.setOnMouseClicked(e -> {objectHandler.createObject("Text");});
+        textBtn.setOnMouseClicked(e -> {objectFactory.createText();});
         
         mouseEventController.setMouseEvent(false);
         selectBtn.setOnAction(e -> {
