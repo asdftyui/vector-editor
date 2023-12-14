@@ -19,7 +19,7 @@ public class ObjectHandler {
     }
 
     public void addElement(BasicFunction element) {
-        elements.add(element);
+        elements.add(0, element);
     }
 
     public void changeZOrder(boolean front) {
